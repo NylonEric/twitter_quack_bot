@@ -1,0 +1,4 @@
+# for linux/mac: enter "crontab -e" to edit your cron jobs
+# enter the text below to create a cron job in your linux/mac file system
+
+*/5 * * * * python3 /home/pi/QuackBot.py >> /home/pi/quack_tweet_log.txt && date +\%Y_\%m_\%d_\%H:\%M >> /home/pi/quack_tweet_log.txt
