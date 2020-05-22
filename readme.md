@@ -3,9 +3,9 @@
 Scrape tweets from a target account, convert the text to "quacks" and tweet the results
 
 
-![Link to Twitter Examples](https://twitter.com/QuackGreen/status/1212549747606740993/photo/1)
-![Link to Twitter Examples](https://twitter.com/QuackGreen/status/1212549747606740993/photo/2)
-![Link to Twitter Examples](https://twitter.com/QuackGreen/status/1212549747606740993/photo/3)
+![Link to Twitter Examples](/images/Tweet1.jpeg)
+![Link to Twitter Examples](/images/Tweet2.jpeg)
+![Link to Twitter Examples](/images/Tweet3.jpeg)
 
 ## Dependencies:
 
