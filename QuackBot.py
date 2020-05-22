@@ -5,7 +5,6 @@ from twitterscraper.query import query_tweets_from_user
 import time
 import re
 import sys
-import pandas as pd
 import pyphen
 from twython import Twython
 import json
