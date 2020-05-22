@@ -1,5 +1,5 @@
 auth.py
-Quackbot_old.py
-tweet_output.txt
+tweet_output.json
 .DS_Store
 __pycache__/
+.ipynb_checkpoints/
