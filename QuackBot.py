@@ -26,8 +26,8 @@ if __name__ == '__main__':
     tweet_state = 'tweet_output.json'
  
     #print the retrieved tweets to the screen:
-    for tweet in list_of_tweets:
-        print(tweet.text, tweet.timestamp, "\n")
+    for single_tweet in list_of_tweets:
+        print(single_tweet.text, single_tweet.timestamp, "\n")
         
     with open(tweet_state) as json_file:
         former_tweets = json.load(json_file)
@@ -133,7 +133,7 @@ elif (current_tweet == former_tweet_zero) & (penultimate_tweet != former_tweet_o
         #send tweet
     quacked_tweet = quacked(penultimate_tweet)
     print(quacked_tweet)
-    tweet(quacked_tweet)
+    #tweet(quacked_tweet)
 
         #save new tweet to persistent storage:
     current_tweets_object = {}
@@ -152,7 +152,7 @@ else:
         #send tweet
     quacked_tweet = quacked(current_tweet)
     print(quacked_tweet)
-    tweet(quacked_tweet)
+    #tweet(quacked_tweet)
 
         #save new tweet to persistent storage:
     current_tweets_object = {}
