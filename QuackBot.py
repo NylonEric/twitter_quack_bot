@@ -26,22 +26,28 @@ if __name__ == '__main__':
     tweet_state = 'tweet_output.json'
  
     #print the retrieved tweets to the screen:
-    for single_tweet in list_of_tweets:
-        print(single_tweet.text, single_tweet.timestamp, "\n")
-        
-    with open(tweet_state) as json_file:
-        former_tweets = json.load(json_file)
-        for t in former_tweets['tweets']:
-            print('former tweets:','\n')
-            former_tweet_zero = t['tweet_zero']
-            former_tweet_one = t['tweet_one']
-            print('tweet[0]:', former_tweet_zero, "\n")
-            print('tweet[1]:', former_tweet_one, "\n")
+    #for single_tweet in list_of_tweets:
+    #    print(single_tweet.text, single_tweet.timestamp, "\n")
+
+    former_tweet_zero = None
+    former_tweet_one = None
+    try:    
+        with open(tweet_state) as json_file:
+            former_tweets = json.load(json_file)
+            for t in former_tweets['tweets']:
+                print('former tweets:','\n')
+                former_tweet_zero = t['tweet_zero']
+                former_tweet_one = t['tweet_one']
+    except:
+        print('error in opening former tweets in', tweet_state)
+    finally:
+        print('tweet[0]:', former_tweet_zero, "\n")
+        print('tweet[1]:', former_tweet_one, "\n")  
 
 
 def quacked(tweet):
     split_tweet = tweet.split()
-    print(split_tweet)
+    #print(split_tweet)
     quacked_tweet_array = []
     
     pyphen.language_fallback('nl_NL_variant1')
@@ -51,13 +57,13 @@ def quacked(tweet):
     for word in split_tweet:
         punctuation = ''
         punctuation_split = re.findall(r"[\w']+|[.,!?;]", word)
-        print(punctuation_split)
+        #print(punctuation_split)
         quacked_word = dic.inserted(word)
         
         # remove weblinks 
         if 'http' in word: 
             quacked_word = ''
-            print('weblink removed')
+            #print('weblink removed')
         
         elif len(punctuation_split) > 1:
             word = punctuation_split[0]
@@ -67,7 +73,7 @@ def quacked(tweet):
                 quacked_word = 'Quack'
             else:
                 quacked_word = 'quack'
-            print('punctuation separated')
+            #print('punctuation separated')
       #if words are multi-syllabic, replace the first syllable   
         elif '-' in quacked_word:
             quacked_split_word = quacked_word.split("-")
@@ -85,15 +91,14 @@ def quacked(tweet):
         # add quacked word to new array
         if punctuation != '':
             quacked_word = quacked_word + punctuation
-        print(word)
-        print(quacked_word)
+        #print(word)
+        #print(quacked_word)
         if quacked_word != '':
             quacked_tweet_array.append(quacked_word)
-        print(quacked_tweet_array)
+        #print(quacked_tweet_array)
         
     #join array to make new string
     quacked_tweet = " ".join(quacked_tweet_array)
-    
     return quacked_tweet
 
 
@@ -105,10 +110,8 @@ def tweet(text):
         access_token_secret
     )    
     message = text
-    print(message)
-    #twitter.update_status(status=message)
-    print("Tweeted: %s" % message)
-    print(twitter)
+    #print(message)
+    
 
     if len(text) > 280:
         tweet_textA = '1/2 ' + message[0:131] + '...'
@@ -116,11 +119,11 @@ def tweet(text):
         twitter.update_status(status=tweet_textA)
         time.sleep(7)
         twitter.update_status(status=tweet_textB)
-        print('message too long: split into two tweets: ' + tweet_textA + '\n', tweet_textB)
+        print('message too long: split into two tweets:\nTweet Text A: ' + tweet_textA + '\nTweet Text B: ', tweet_textB)
         
     else:
         twitter.update_status(status=message)
-        print('message tweeted: ', message)
+        print("Message tweeted: %s" % message)
 
 
 if (current_tweet == former_tweet_zero) & (penultimate_tweet == former_tweet_one):
@@ -132,8 +135,7 @@ elif (current_tweet == former_tweet_zero) & (penultimate_tweet != former_tweet_o
        
         #send tweet
     quacked_tweet = quacked(penultimate_tweet)
-    print(quacked_tweet)
-    #tweet(quacked_tweet)
+    tweet(quacked_tweet)
 
         #save new tweet to persistent storage:
     current_tweets_object = {}
@@ -142,17 +144,19 @@ elif (current_tweet == former_tweet_zero) & (penultimate_tweet != former_tweet_o
         'tweet_zero': current_tweet,
         'tweet_one': penultimate_tweet 
     })
-    with open(tweet_state, 'w') as json_file:
-        #file.write(current_tweet)
-        json.dump(current_tweets_object, json_file)
-        print("current tweets saved:", current_tweet, penultimate_tweet)
+    try:
+        with open(tweet_state, 'w') as json_file:
+            #file.write(current_tweet)
+            json.dump(current_tweets_object, json_file)
+            print("current tweets saved:", current_tweet, penultimate_tweet)
+    except:
+        print('error saving ', tweet_state)
 else:
     print("Change detected")
 
         #send tweet
     quacked_tweet = quacked(current_tweet)
-    print(quacked_tweet)
-    #tweet(quacked_tweet)
+    tweet(quacked_tweet)
 
         #save new tweet to persistent storage:
     current_tweets_object = {}
@@ -161,8 +165,10 @@ else:
         'tweet_zero': current_tweet,
         'tweet_one': penultimate_tweet 
     })
-    with open(tweet_state, 'w') as json_file:
-        json.dump(current_tweets_object, json_file)
-        print("current tweets saved:", current_tweet, penultimate_tweet)
-        
+    try: 
+        with open(tweet_state, 'w') as json_file:
+            json.dump(current_tweets_object, json_file)
+            print("Current tweets saved: Current tweet: ", current_tweet, "\nPenultimate tweet: ", penultimate_tweet)
+    except:
+        print('error saving ', tweet_state)    
 print('End Program')
