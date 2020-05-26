@@ -29,8 +29,8 @@ if __name__ == '__main__':
     #for single_tweet in list_of_tweets:
     #    print(single_tweet.text, single_tweet.timestamp, "\n")
 
-    former_tweet_zero = None
-    former_tweet_one = None
+    former_tweet_zero = ""
+    former_tweet_one = ""
     try:    
         with open(tweet_state) as json_file:
             former_tweets = json.load(json_file)
@@ -110,9 +110,7 @@ def tweet(text):
         access_token_secret
     )    
     message = text
-    #print(message)
     
-
     if len(text) > 280:
         tweet_textA = '1/2 ' + message[0:131] + '...'
         tweet_textB = '2/2 ...' + message[131:]
@@ -148,7 +146,7 @@ elif (current_tweet == former_tweet_zero) & (penultimate_tweet != former_tweet_o
         with open(tweet_state, 'w') as json_file:
             #file.write(current_tweet)
             json.dump(current_tweets_object, json_file)
-            print("current tweets saved:", current_tweet, penultimate_tweet)
+            print("current tweets saved: Current tweet: ", current_tweet, "\nPenultimate tweet: ", penultimate_tweet)
     except:
         print('error saving ', tweet_state)
 else:
