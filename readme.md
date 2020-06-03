@@ -12,8 +12,11 @@ Scrape tweets from a target account, convert the text to "quacks" and tweet the 
 * Twitterscraper tool for scraping tweets from target account:
 
 https://pypi.org/project/twitterscraper/0.2.7/
+
 **Update** As of 2020_05_02 you'll need to update the "query.py" file in your install modules to reflect the changes addressed here: https://github.com/taspinar/twitterscraper/issues/296
-In the "query.py file, change `HEADER = {'User-Agent': random.choice(HEADERS_LIST)}` to this: `HEADER = {'User-Agent': random.choice(HEADERS_LIST), 'X-Requested-With': 'XMLHttpRequest'}`
+
+In the "query.py file, change `HEADER = {'User-Agent': random.choice(HEADERS_LIST)}` to this: 
+`HEADER = {'User-Agent': random.choice(HEADERS_LIST), 'X-Requested-With': 'XMLHttpRequest'}`
 
 * Pyphen tool for parsing english language text by syllable:
 
