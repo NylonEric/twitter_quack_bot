@@ -63,7 +63,7 @@ def quacked(tweet):
 
         # handle weblinks
         if 'http' in word:
-            quacked_word = word
+            quacked_word = " " + word
 
         elif len(punctuation_split) > 1:
             word = punctuation_split[0]
@@ -96,7 +96,7 @@ def quacked(tweet):
         if quacked_word != '':
             quacked_tweet_array.append(quacked_word)
         #print(quacked_tweet_array)
-        
+
     #join array to make new string
     quacked_tweet = " ".join(quacked_tweet_array)
     return quacked_tweet
@@ -108,7 +108,7 @@ def tweet(text):
         consumer_secret,
         access_token,
         access_token_secret
-    )    
+    )
     message = text
 
     if len(text) > 280:
@@ -128,7 +128,7 @@ if (current_tweet == former_tweet_zero) & (penultimate_tweet == former_tweet_one
         print("no change")
         print('exit program')
         pass
-elif (current_tweet == former_tweet_zero) & (penultimate_tweet != former_tweet_one): 
+elif (current_tweet == former_tweet_zero) & (penultimate_tweet != former_tweet_one):
     print("change detected in penultimate tweet, pinned tweet likely")
 
         #send tweet
@@ -140,7 +140,7 @@ elif (current_tweet == former_tweet_zero) & (penultimate_tweet != former_tweet_o
     current_tweets_object['tweets'] = []
     current_tweets_object['tweets'].append({
         'tweet_zero': current_tweet,
-        'tweet_one': penultimate_tweet 
+        'tweet_one': penultimate_tweet
     })
     try:
         with open(tweet_state, 'w') as json_file:
@@ -161,9 +161,9 @@ else:
     current_tweets_object['tweets'] = []
     current_tweets_object['tweets'].append({
         'tweet_zero': current_tweet,
-        'tweet_one': penultimate_tweet 
+        'tweet_one': penultimate_tweet
     })
-    try: 
+    try:
         with open(tweet_state, 'w') as json_file:
             json.dump(current_tweets_object, json_file)
             print("Current tweets saved: Current tweet: ", current_tweet, "\nPenultimate tweet: ", penultimate_tweet)
