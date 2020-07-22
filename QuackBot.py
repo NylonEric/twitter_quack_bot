@@ -50,7 +50,7 @@ def quacked(tweet):
     split_tweet = tweet.split()
     #print(split_tweet)
     quacked_tweet_array = []
-
+    exception_words = ["a", "an" "or", "the", "and", "in", "at", "some", "all"]
     pyphen.language_fallback('nl_NL_variant1')
     dic = pyphen.Pyphen(lang='nl_NL')
 
@@ -64,7 +64,8 @@ def quacked(tweet):
         # handle weblinks
         if 'http' in word:
             quacked_word = " " + word
-
+        elif word in exception_words:
+            quacked_word = word
         elif len(punctuation_split) > 1:
             word = punctuation_split[0]
             punctuation = punctuation_split[1:]
