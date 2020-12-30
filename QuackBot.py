@@ -7,6 +7,7 @@ import re
 import sys
 import pyphen
 from twython import Twython
+import tweepy
 import json
 from auth import (
     consumer_key,
@@ -18,12 +19,20 @@ from auth import (
 
 if __name__ == '__main__':
     target_user = 'hankgreen'
-    list_of_tweets = query_tweets_from_user(target_user, 10)
-    current_tweet = list_of_tweets[0].text
-    penultimate_tweet = list_of_tweets[1].text
+    tweet_count = 10
+    #tweepy setup
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+    api = tweepy.API(auth,wait_on_rate_limit=True)
 
-    print("current tweet:", current_tweet, "\n")
-    print("penultimate tweet:", penultimate_tweet, "\n")
+    tweets = tweepy.Cursor(api.user_timeline,id=target_user).items(tweet_count)
+    tweets_list = [[tweet.created_at, tweet.id, tweet.text] for tweet in tweets]
+
+    current_tweet = tweets_list[0][2]
+    penultimate_tweet = tweets_list[1][2]
+
+    # print("current tweet:", current_tweet, "\n")
+    # print("penultimate tweet:", penultimate_tweet, "\n")
     tweet_state = 'tweet_output.json'
 
     #print the retrieved tweets to the screen:
@@ -100,6 +109,7 @@ def quacked(tweet):
 
     #join array to make new string
     quacked_tweet = " ".join(quacked_tweet_array)
+    # print(quacked_tweet)
     return quacked_tweet
 
 
