@@ -59,7 +59,7 @@ def quacked(tweet):
     split_tweet = tweet.split()
     #print(split_tweet)
     quacked_tweet_array = []
-    exception_words = ["a", "an" "or", "the", "and", "in", "at", "some", "all"]
+    exception_words = ["a", "an" "or", "the", "and", "in", "at", "some", "all", "@desertplantdan", "@philsthiccbooty"]
     pyphen.language_fallback('nl_NL_variant1')
     dic = pyphen.Pyphen(lang='nl_NL')
 
